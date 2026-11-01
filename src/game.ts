@@ -187,3 +187,29 @@ export function restored(g: Game): Game {
       }
     : g;
 }
+
+// A reload cannot resume in-flight network requests. Preserve the turn as reviewable.
+export function recoverInterrupted(g: Game): Game {
+  const interrupted: Judgment = {
+    verdict: "unknown",
+    source: "unavailable",
+    comment:
+      "ページの再読み込みでAI審議が中断しました。説明を保存して再審議するか、みんなで判定してください。",
+  };
+  return {
+    ...restored(g),
+    turns: g.turns.map((t) =>
+      t.kind === "timeout"
+        ? t
+        : {
+            ...t,
+            initial: t.initial || interrupted,
+            explanations: t.explanations.map((e) =>
+              e.judgment
+                ? e
+                : { ...e, judgment: interrupted, recommendation: "unknown" },
+            ),
+          },
+    ),
+  };
+}

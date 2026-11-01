@@ -22,6 +22,7 @@ import {
   newGame,
   reduceGame,
   restored,
+  recoverInterrupted,
   losses,
   pending,
   type Game,
@@ -152,7 +153,7 @@ export function App() {
   }, []);
   useEffect(() => {
     void allGames()
-      .then(setSaved)
+      .then((games) => setSaved(games.map(recoverInterrupted)))
       .catch(() =>
         setError(
           "端末への保存が利用できません。プライベートブラウズや空き容量を確認してください。",
@@ -223,12 +224,13 @@ export function App() {
     setNotice("時間切れ！負け＋1。審議するか、次の人へ進もう。");
   }, [apply, stopRecording]);
   useEffect(() => {
+    if (game?.phase !== "playing") return;
     const timer = setInterval(() => {
       setNow(Date.now());
       timeout();
     }, 80);
     return () => clearInterval(timer);
-  }, [timeout]);
+  }, [timeout, game?.phase]);
   useEffect(() => {
     const hide = () => {
       if (document.hidden && gameRef.current?.phase === "playing") {
