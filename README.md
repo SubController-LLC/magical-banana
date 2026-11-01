@@ -53,7 +53,9 @@ AIには文字のみを送り、個人的経験の真偽の証明を要求しま
 
 ## デプロイ
 
-GitHub: `SubController-LLC/magical-banana`（private）。Vercelに標準Git連携で接続し、Production Branch `main` / Root Directory リポジトリルート / Framework Vite / Build `npm run build` / Output `dist` とします。
+GitHub: `SubController-LLC/magical-banana`（ユーザー承認済みの公開リポジトリ）。Vercelに標準Git連携で接続し、Production Branch `main` / Root Directory リポジトリルート / Framework Vite / Build `npm run build` / Output `dist` とします。
+
+公開先は既存の無料チーム `saitoyasutakeai-6583s-projects`。Productionのサイトはログインなしで閲覧でき、PreviewはVercel認証で保護します。
 
 デプロイの起点はGit pushのみ。`vercel deploy`、手動Redeploy、APIによる直接デプロイは利用しません。APIキーと合言葉はVercel環境変数に登録し、ローテーション後はGitへの変更・pushを起点に反映します。
 
