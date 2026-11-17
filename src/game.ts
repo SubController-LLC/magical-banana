@@ -188,7 +188,6 @@ export function restored(g: Game): Game {
     : g;
 }
 
-// A reload cannot resume in-flight network requests. Preserve the turn as reviewable.
 export function recoverInterrupted(g: Game): Game {
   const interrupted: Judgment = {
     verdict: "unknown",
