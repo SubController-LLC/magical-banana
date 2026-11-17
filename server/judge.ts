@@ -51,7 +51,6 @@ function authorized(value: string | undefined) {
   return actual.length === expected.length && timingSafeEqual(expected, actual);
 }
 export function createHandler(run = runJudgment) {
-  // Best-effort instance limiter. The shared access code is the primary access control.
   let windowStart = Date.now(),
     count = 0;
   return async function handler(
@@ -135,7 +134,6 @@ export function createHandler(run = runJudgment) {
     try {
       reply(200, await run(input.data));
     } catch (e) {
-      // Only log an error category. Never log request text, headers, keys, or SDK errors wholesale.
       const status =
         typeof e === "object" && e !== null && "statusCode" in e
           ? Number(e.statusCode)

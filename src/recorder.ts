@@ -1,5 +1,3 @@
-// Browser speech recognition may use the browser vendor's cloud service.
-// Audio blobs themselves are kept on this device in IndexedDB.
 interface SpeechResult {
   isFinal: boolean;
   [index: number]: { transcript: string };
